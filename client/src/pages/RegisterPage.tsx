@@ -13,11 +13,12 @@ export default function RegisterPage() {
 
   async function registerUser(e: FormEvent) {
     e.preventDefault();
-    const response = await axios.post(
-      '/users/register',
-      { email, password, confirmPassword, name },
-      { withCredentials: true },
-    );
+
+    const body = { email, password, confirmPassword, name };
+
+    const response = await axios.post('/users/register', body, {
+      withCredentials: true,
+    });
 
     console.log(response);
   }
