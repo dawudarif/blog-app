@@ -3,13 +3,14 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import '../index.css';
 import axios from 'axios';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  async function loginUser() {
+  async function loginUser(e: FormEvent) {
+    e.preventDefault();
     const response = await axios.post(
       '/users/login',
       { email, password },
@@ -40,7 +41,9 @@ export default function LoginPage() {
         <Button variant='default' className='w-full mt-4' type='submit'>
           Login
         </Button>
-        <Link to='/register'>Not a user? Register here.</Link>
+        <Link to='/register' className='hover:text-blue-900'>
+          Not a user? Register here.
+        </Link>
       </form>
     </div>
   );

@@ -1,19 +1,21 @@
+import axios from 'axios';
+import { FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import '../index.css';
-import axios from 'axios';
-import { useState } from 'react';
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  async function registerUser() {
+  async function registerUser(e: FormEvent) {
+    e.preventDefault();
     const response = await axios.post(
       '/users/register',
-      { email, password },
+      { email, password, confirmPassword, name },
       { withCredentials: true },
     );
 
@@ -34,6 +36,13 @@ export default function RegisterPage() {
           onChange={(e) => setEmail(e.target.value)}
         />
         <Input
+          placeholder='John Doe'
+          type='text'
+          className='text-base'
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <Input
           placeholder='Password'
           type='password'
           className='text-base'
@@ -50,7 +59,9 @@ export default function RegisterPage() {
         <Button variant='default' className='w-full mt-4' type='submit'>
           Register
         </Button>
-        <Link to='/login'>Already a user? Login here.</Link>
+        <Link to='/login' className='hover:text-blue-900'>
+          Already a user? Login here.
+        </Link>
       </form>
     </div>
   );
