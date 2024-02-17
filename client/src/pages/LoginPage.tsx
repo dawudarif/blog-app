@@ -1,13 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import '../index.css';
 import axios from 'axios';
 import { FormEvent, useState } from 'react';
+import RingLoader from '../components/loaders/ring';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [redirect, setRedirect] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   async function loginUser(e: FormEvent) {
     e.preventDefault();
@@ -17,7 +20,13 @@ export default function LoginPage() {
       { withCredentials: true },
     );
 
-    console.log(response);
+    if (response.status === 200) {
+      setRedirect(true);
+    }
+  }
+
+  if (redirect) {
+    return <Navigate to='/' />;
   }
 
   return (
@@ -38,8 +47,13 @@ export default function LoginPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button variant='default' className='w-full mt-4' type='submit'>
-          Login
+        <Button
+          variant='default'
+          className='w-full mt-4'
+          type='submit'
+          disabled={loading}
+        >
+          {loading ? <RingLoader size={25} color='white' /> : <>Login</>}
         </Button>
         <Link to='/register' className='hover:text-blue-900'>
           Not a user? Register here.

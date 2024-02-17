@@ -8,11 +8,10 @@ export const getUserProfile = async (req: Request, res: Response) => {
 }
 
 export const registerUser = async (req: Request, res: Response) => {
-  console.log(req.body);
   const { email, name, password, confirmPassword } = req.body
 
   if (password !== confirmPassword) {
-    res.status(500).json({ error: "passwords do not match" })
+    res.status(422).json({ error: "Passwords do not match" })
     return;
   }
 
@@ -23,7 +22,7 @@ export const registerUser = async (req: Request, res: Response) => {
   })
 
   if (userExists) {
-    res.status(409).json({ error: 'User with this email already exists.' });
+    res.status(500).json({ error: 'User with this email already exists.' });
     return;
   }
 
@@ -31,7 +30,6 @@ export const registerUser = async (req: Request, res: Response) => {
     res.status(406).json({ error: 'Necessary fields not provided' });
     return;
   }
-
 
   const salt = await bcrypt.genSalt(10)
   const hashedPassword = await bcrypt.hash(password, salt)
@@ -46,12 +44,41 @@ export const registerUser = async (req: Request, res: Response) => {
 
   generateCookie(res, createUser.id, createUser.email)
 
-  res.status(200).json({ createUser })
+  res.status(201).json({ createUser })
 }
-export const loginUser = async (req: Request, res: Response) => {
 
-  res.json('hi');
+export const loginUser = async (req: Request, res: Response) => {
+  const { email, password } = req.body
+
+
+  if (!email || !password) {
+    res.status(406).json({ error: 'Necessary fields not provided' });
+    return;
+  }
+
+  const getUser = await prisma.account.findUnique({ where: { email } })
+
+  if (!getUser) {
+    res.status(401).json({ error: 'Invalid credentials' });
+    return;
+  }
+
+  const comparePassword = await bcrypt.compare(password, getUser?.password)
+
+  if (!comparePassword) {
+    res.status(401).json({ error: 'Invalid credentials' });
+    return;
+  }
+
+  generateCookie(res, getUser.id, getUser.email)
+
+  res.status(200).json({
+    id: getUser.id,
+    name: getUser.name,
+    email: getUser.email
+  })
 }
+
 
 export const logoutUser = async (req: Request, res: Response) => {
   res.json('hi');

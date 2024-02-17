@@ -1,26 +1,51 @@
 import axios from 'axios';
 import { FormEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import '../index.css';
+import RingLoader from '../components/loaders/ring';
+import { useToast } from '../components/ui/use-toast';
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [redirect, setRedirect] = useState(false);
+
+  const { toast } = useToast();
 
   async function registerUser(e: FormEvent) {
     e.preventDefault();
 
-    const body = { email, password, confirmPassword, name };
+    try {
+      setLoading(true);
+      const body = { email, password, confirmPassword, name };
 
-    const response = await axios.post('/users/register', body, {
-      withCredentials: true,
-    });
+      const response = await axios.post('/users/register', body, {
+        withCredentials: true,
+      });
 
-    console.log(response);
+      if (response.status !== 201) {
+        throw Error();
+      } else {
+        setRedirect(true);
+      }
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Error creating account',
+        description: error.response.data.error,
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (redirect) {
+    return <Navigate to='/' />;
   }
 
   return (
@@ -57,8 +82,13 @@ export default function RegisterPage() {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        <Button variant='default' className='w-full mt-4' type='submit'>
-          Register
+        <Button
+          variant='default'
+          className='w-full mt-4'
+          type='submit'
+          disabled={loading}
+        >
+          {loading ? <RingLoader size={25} color='white' /> : <>Login</>}
         </Button>
         <Link to='/login' className='hover:text-blue-900'>
           Already a user? Login here.
