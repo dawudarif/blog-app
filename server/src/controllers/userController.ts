@@ -2,9 +2,28 @@ import { Request, Response, request } from 'express';
 import { prisma } from '../prisma/prisma';
 import bcrypt from 'bcryptjs'
 import { generateCookie } from '../utils/generateCookie';
+import jwt from 'jsonwebtoken'
+import { JWTPayload } from '../types/types';
 
 export const getUserProfile = async (req: Request, res: Response) => {
-  res.json('hi');
+  const { auth } = req.cookies
+
+  if (process.env.JWT_SECRET && auth) {
+
+    const userInfo = jwt.verify(auth, process.env.JWT_SECRET) as JWTPayload
+    console.log(userInfo);
+
+    if (userInfo) {
+
+      res.json({
+        userInfo: {
+          id: userInfo.userId
+          , name: userInfo.name, email: userInfo.email
+        }
+      })
+    }
+  }
+
 }
 
 export const registerUser = async (req: Request, res: Response) => {
@@ -42,7 +61,7 @@ export const registerUser = async (req: Request, res: Response) => {
     }
   })
 
-  generateCookie(res, createUser.id, createUser.email)
+  generateCookie(res, createUser.id, createUser.email, createUser.name)
 
   res.status(201).json({ createUser })
 }
@@ -70,7 +89,7 @@ export const loginUser = async (req: Request, res: Response) => {
     return;
   }
 
-  generateCookie(res, getUser.id, getUser.email)
+  generateCookie(res, getUser.id, getUser.email, getUser.name)
 
   res.status(200).json({
     id: getUser.id,

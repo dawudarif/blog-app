@@ -3,7 +3,7 @@ import { getUserProfile, loginUser, logoutUser, registerUser } from '../controll
 
 const router = express.Router()
 
-router.route('/user').get(getUserProfile)
+router.route('/profile').get(getUserProfile)
 router.route('/register').post(registerUser)
 router.route('/login').post(loginUser)
 router.route('/logout').get(logoutUser)
