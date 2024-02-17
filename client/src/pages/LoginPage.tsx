@@ -5,6 +5,7 @@ import '../index.css';
 import axios from 'axios';
 import { FormEvent, useState } from 'react';
 import RingLoader from '../components/loaders/ring';
+import { useToast } from '../components/ui/use-toast';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -12,16 +13,32 @@ export default function LoginPage() {
   const [redirect, setRedirect] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const { toast } = useToast();
+
   async function loginUser(e: FormEvent) {
     e.preventDefault();
-    const response = await axios.post(
-      '/users/login',
-      { email, password },
-      { withCredentials: true },
-    );
 
-    if (response.status === 200) {
-      setRedirect(true);
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        '/users/login',
+        { email, password },
+        { withCredentials: true },
+      );
+
+      if (response.status === 200) {
+        setRedirect(true);
+      } else {
+        throw new Error();
+      }
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: error.response.data.error,
+      });
+    } finally {
+      setLoading(false);
     }
   }
 
