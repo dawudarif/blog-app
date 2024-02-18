@@ -6,6 +6,7 @@ import axios from 'axios';
 import { FormEvent, useState } from 'react';
 import RingLoader from '../components/loaders/ring';
 import { useToast } from '../components/ui/use-toast';
+import { KeyRound } from 'lucide-react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -47,8 +48,13 @@ export default function LoginPage() {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center bg-[#f1f1f1] w-full h-screen gap-10'>
-      <h1 className='font-bold text-3xl text-[#5555]'>Login to Your account</h1>
+    <div className='flex flex-col items-center justify-center bg-slate-50 w-full h-[35rem] gap-10'>
+      <div className='flex flex-col justify-center items-center gap-6'>
+        <h1 className='font-bold text-3xl text-[#5555]'>
+          Login to Your account
+        </h1>
+        <KeyRound size={45} color='#5555' />
+      </div>
       <form className='w-[30%] gap-2 flex flex-col' onSubmit={loginUser}>
         <Input
           placeholder='john@example.com'

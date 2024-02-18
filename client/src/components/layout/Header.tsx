@@ -1,15 +1,14 @@
 import axios from 'axios';
-import { LibrarySquare, LogOut } from 'lucide-react';
 import { useContext, useEffect, useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
 import { UserContext } from '../../context/userContext';
-import { Navigate } from 'react-router-dom';
 
 export default function Header() {
   const { userInfo, setUserInfo } = useContext(UserContext) as any;
   const [redirect, setRedirect] = useState(false);
 
-  const size = 45;
-  const color = '#1e1e1e';
+  const hrefStyle =
+    'font-semibold text-xl cursor-pointer hover:bg-stone-100 transition-all duration-500 p-2 rounded-md text-[#333]';
 
   async function getProfile() {
     const response = await axios.get('/users/profile', {
@@ -32,14 +31,17 @@ export default function Header() {
   }
 
   return (
-    <div className='flex justify-center items-center h-20 bg-[#ffff] shadow-sm gap-4'>
-      <div>
-        <LibrarySquare size={size} color={color} />
-      </div>
-      <div className='flex bg-gray-200 rounded-md justify-center items-center p-1'>
-        <LogOut size={size} color={color} />
-        <h1 className='capitalize font-semibold'>{userInfo.name}</h1>
-      </div>
+    <div className='flex justify-center items-center h-20 bg-[#ffff] shadow-sm gap-4 sticky top-0'>
+      <Link to='/' className={hrefStyle}>
+        Feed
+      </Link>
+      {userInfo.name ? (
+        <div className={hrefStyle}>Logout</div>
+      ) : (
+        <Link to='/login' className={hrefStyle}>
+          Login
+        </Link>
+      )}
     </div>
   );
 }
