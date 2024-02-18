@@ -21,6 +21,14 @@ export default function Header() {
     }
   }
 
+  async function logout() {
+    const response = await axios.get('/users/logout', {
+      withCredentials: true,
+    });
+
+    console.log(response);
+  }
+
   useEffect(() => {
     getProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps

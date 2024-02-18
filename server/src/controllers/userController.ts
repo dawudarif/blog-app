@@ -11,14 +11,16 @@ export const getUserProfile = async (req: Request, res: Response) => {
   if (process.env.JWT_SECRET && auth) {
 
     const userInfo = jwt.verify(auth, process.env.JWT_SECRET) as JWTPayload
-    console.log(userInfo);
+
 
     if (userInfo) {
+      const getUser = await prisma.account.findUnique({ where: { email: userInfo.email, id: userInfo.userId } })
 
       res.json({
         userInfo: {
-          id: userInfo.userId
-          , name: userInfo.name, email: userInfo.email
+          id: getUser?.id,
+          name: getUser?.name,
+          email: getUser?.email
         }
       })
     }
@@ -100,5 +102,20 @@ export const loginUser = async (req: Request, res: Response) => {
 
 
 export const logoutUser = async (req: Request, res: Response) => {
-  res.json('hi');
+  const user = req.user
+
+  if (!user) {
+    res
+      .status(401)
+      .json({ error: 'Something went wrong please try again later.' });
+    return;
+  }
+
+  res.cookie('auth', '', {
+    httpOnly: true,
+    secure: true,
+    expires: new Date(0),
+  });
+
+  res.status(200).json({ message: 'User Logged Out' });
 }
