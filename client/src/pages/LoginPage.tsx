@@ -3,7 +3,7 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import '../index.css';
 import axios from 'axios';
-import { FormEvent, useContext, useState } from 'react';
+import { FormEvent, useContext, useEffect, useState } from 'react';
 import RingLoader from '../components/loaders/ring';
 import { useToast } from '../components/ui/use-toast';
 import { KeyRound } from 'lucide-react';
@@ -15,7 +15,7 @@ export default function LoginPage() {
   const [redirect, setRedirect] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { setUserInfo } = useContext(UserContext) as any;
+  const { userInfo, setUserInfo } = useContext(UserContext) as any;
   const { toast } = useToast();
 
   async function loginUser(e: FormEvent) {
@@ -45,6 +45,12 @@ export default function LoginPage() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    if (userInfo.name) {
+      setRedirect(true);
+    }
+  }, [userInfo]);
 
   if (redirect) {
     return <Navigate to='/' />;
