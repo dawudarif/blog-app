@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -7,6 +7,7 @@ import '../index.css';
 import RingLoader from '../components/loaders/ring';
 import { useToast } from '../components/ui/use-toast';
 import { KeyRound } from 'lucide-react';
+import { UserContext } from '../context/userContext';
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('');
@@ -16,6 +17,7 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [redirect, setRedirect] = useState(false);
 
+  const { setUserInfo } = useContext(UserContext) as any;
   const { toast } = useToast();
 
   async function registerUser(e: FormEvent) {
@@ -32,6 +34,7 @@ export default function RegisterPage() {
       if (response.status !== 201) {
         throw Error();
       } else {
+        setUserInfo(response.data.createUser);
         setRedirect(true);
       }
     } catch (error: any) {

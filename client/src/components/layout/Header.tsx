@@ -14,6 +14,7 @@ export default function Header() {
     const response = await axios.get('/users/profile', {
       withCredentials: true,
     });
+
     if (response.status === 200) {
       setUserInfo(response.data.userInfo);
     } else {
@@ -27,6 +28,10 @@ export default function Header() {
     });
 
     console.log(response);
+
+    if (response.status === 200) {
+      setUserInfo({});
+    }
   }
 
   useEffect(() => {
@@ -44,7 +49,9 @@ export default function Header() {
         Feed
       </Link>
       {userInfo.name ? (
-        <div className={hrefStyle}>Logout</div>
+        <div className={hrefStyle} onClick={logout}>
+          Logout
+        </div>
       ) : (
         <Link to='/login' className={hrefStyle}>
           Login
