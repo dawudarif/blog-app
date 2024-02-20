@@ -55,9 +55,14 @@ export default function Header() {
         Feed
       </Link>
       {userInfo.name ? (
-        <div className={hrefStyle} onClick={logout}>
-          Logout
-        </div>
+        <>
+          <Link to='/blog/create' className={hrefStyle}>
+            Create
+          </Link>
+          <div className={hrefStyle} onClick={logout}>
+            Logout
+          </div>
+        </>
       ) : (
         <Link to='/login' className={hrefStyle}>
           Login

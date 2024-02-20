@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import BlogSlide from '../components/index/BlogSlide';
 import { IBlogItem } from '../types/types';
 
 export default function IndexPage() {
@@ -19,17 +20,11 @@ export default function IndexPage() {
   }, [pageNo]);
 
   return (
-    <div className='flex items-center w-full'>
-      <div className='w-[80%]'>
-        {data &&
-          data.map((item: IBlogItem) => (
-            <div>
-              <img src={item.cover} alt={item.title} />
-              <h1>{item.title}</h1>
-              <h2>{item.account.name}</h2>
-              <h4>{item.createdAt}</h4>
-            </div>
-          ))}
+    <div className='w-full flex justify-center'>
+      <div className='flex flex-col justify-center w-[80%] p-4 gap-4'>
+        {data.map((item: IBlogItem) => (
+          <BlogSlide key={item.id} item={item} />
+        ))}
       </div>
     </div>
   );
