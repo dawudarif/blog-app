@@ -4,6 +4,30 @@ import { prisma } from '../prisma/prisma';
 import { ICreateBlogInput } from '../types/types';
 
 
+const getBlogs = async (req: Request, res: Response) => {
+  const { page = 1, perPage = 6 } = req.params;
+
+  const offset = (Number(page) - 1) * Number(perPage);
+  const posts = await prisma.post.findMany({
+    select: {
+      id: true, title: true, summary: true, cover: true, createdAt: true, updatedAt: true, account: {
+        select: {
+          id: true,
+          name: true
+        }
+      }
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    skip: (offset),
+    take: Number(perPage)
+  },);
+
+
+  res.status(200).json(posts)
+}
+
 
 const createBlog = async (req: Request, res: Response) => {
   const { title, summary, content } = req.body as ICreateBlogInput
@@ -51,4 +75,4 @@ const updateBlog = async (req: Request, res: Response) => { }
 
 
 
-export { createBlog, updateBlog }
+export { createBlog, updateBlog, getBlogs }
