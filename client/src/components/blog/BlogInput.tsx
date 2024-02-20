@@ -1,13 +1,12 @@
-import React, { ChangeEvent } from 'react';
-import { Input } from '../ui/input';
-import Editor from './Editor';
 import RingLoader from '../loaders/ring';
 import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import Editor from './Editor';
 
 interface BlogInputProps {
   headingText: string;
   buttonText: string;
-  onSubmitFn: () => void;
+  onSubmitFn: (e: any) => void;
   title: string;
   setTitle: (value: string) => void;
   summary: string;
