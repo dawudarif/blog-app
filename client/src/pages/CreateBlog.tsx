@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import BlogInput from '../components/blog/BlogInput';
 import axios from 'axios';
+import { Navigate } from 'react-router-dom';
+import { useToast } from '../components/ui/use-toast';
 
 export default function CreateBlog() {
   const [title, setTitle] = useState('');
@@ -8,10 +10,14 @@ export default function CreateBlog() {
   const [content, setContent] = useState('');
   const [cover, setCover] = useState('');
   const [loading, setLoading] = useState(false);
+  const [redirect, setRedirect] = useState(false);
+
+  const { toast } = useToast();
 
   async function createBlog(e: SubmitEvent) {
     e.preventDefault();
 
+    setLoading(true);
     const data = new FormData();
     data.append('title', title);
     data.append('summary', summary);
@@ -25,9 +31,29 @@ export default function CreateBlog() {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log(response);
-    } catch (error) {}
+
+      if (response.status === 201) {
+        toast({
+          variant: 'default',
+          title: 'Success',
+          description: 'Blog post created',
+        });
+        setRedirect(true);
+      } else {
+        throw new Error();
+      }
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: error.response.data.error,
+      });
+    } finally {
+      setLoading(false);
+    }
   }
+
+  if (redirect) return <Navigate to='/' />;
 
   return (
     <div className='flex flex-col items-center justify-center bg-stone-50 w-full max-h-max gap-10'>

@@ -3,7 +3,7 @@ import { IBlogItem } from '../../types/types';
 
 export default function BlogSlide({ item }: { item: IBlogItem }) {
   return (
-    <div className='bg-stone-50 rounded-lg w-[80%] p-4 grid gap-4 grid-cols-2 cursor-pointer'>
+    <div className='bg-stone-50 rounded-lg w-[80%] p-4 grid gap-4 grid-cols-2 cursor-pointer hover:shadow-md transition duration-500'>
       <div>
         <img
           src={item.cover}

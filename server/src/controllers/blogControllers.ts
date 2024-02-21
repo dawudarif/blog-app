@@ -68,7 +68,7 @@ const createBlog = async (req: Request, res: Response) => {
     }
   })
 
-  res.status(200).json({ createBlog })
+  res.status(201).json({ createBlog })
 }
 
 const updateBlog = async (req: Request, res: Response) => { }

@@ -20,8 +20,8 @@ export default function IndexPage() {
   }, [pageNo]);
 
   return (
-    <div className='w-full flex justify-center'>
-      <div className='flex flex-col justify-center w-[80%] p-4 gap-4'>
+    <div className='w-full flex justify-center items-center'>
+      <div className='flex flex-col justify-center items-center w-[80%] p-4 gap-4'>
         {data.map((item: IBlogItem) => (
           <BlogSlide key={item.id} item={item} />
         ))}
