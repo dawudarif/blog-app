@@ -28,6 +28,21 @@ const getBlogs = async (req: Request, res: Response) => {
   res.status(200).json(posts)
 }
 
+const getSingleBlog = async (req: Request, res: Response) => {
+  const { id } = req.params
+
+  const getPost = await prisma.post.findUnique({
+    where: { id }, include: {
+      account: {
+        select: {
+          id: true, name: true
+        }
+      }
+    }
+  })
+
+  res.status(200).json({ getPost })
+}
 
 const createBlog = async (req: Request, res: Response) => {
   const { title, summary, content } = req.body as ICreateBlogInput
@@ -75,4 +90,4 @@ const updateBlog = async (req: Request, res: Response) => { }
 
 
 
-export { createBlog, updateBlog, getBlogs }
+export { createBlog, updateBlog, getBlogs, getSingleBlog }
