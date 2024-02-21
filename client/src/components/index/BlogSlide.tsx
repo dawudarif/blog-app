@@ -1,9 +1,13 @@
 import moment from 'moment';
 import { IBlogItem } from '../../types/types';
+import { Link } from 'react-router-dom';
 
 export default function BlogSlide({ item }: { item: IBlogItem }) {
   return (
-    <div className='bg-stone-50 rounded-lg w-[80%] p-4 grid gap-4 grid-cols-2 cursor-pointer hover:shadow-md transition duration-500'>
+    <Link
+      to={`/blog/${item.id}`}
+      className='bg-stone-50 rounded-lg w-[80%] p-4 grid gap-4 grid-cols-2 cursor-pointer hover:shadow-md transition duration-500'
+    >
       <div>
         <img
           src={item.cover}
@@ -27,6 +31,6 @@ export default function BlogSlide({ item }: { item: IBlogItem }) {
           </h4>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
