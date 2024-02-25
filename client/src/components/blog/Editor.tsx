@@ -1,7 +1,12 @@
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import 'highlight.js/styles/atom-one-dark.css';
 
 const modules = {
+  syntax: {
+    languages: ['javascript', 'python', 'java'], // Supported languages
+    defaultLanguage: 'javascript',
+  },
   toolbar: [
     [{ header: [1, 2, false] }],
     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
@@ -13,6 +18,7 @@ const modules = {
     ],
     ['link', 'image'],
     ['clean'],
+    ['code-block'],
   ],
 };
 const formats = [
@@ -27,6 +33,7 @@ const formats = [
   'indent',
   'link',
   'image',
+  'code-block',
 ];
 
 export default function Editor({

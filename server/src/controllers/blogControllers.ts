@@ -41,7 +41,7 @@ const getSingleBlog = async (req: Request, res: Response) => {
     }
   })
 
-  res.status(200).json({ getPost })
+  res.status(200).json(getPost)
 }
 
 const createBlog = async (req: Request, res: Response) => {
