@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ISingleBlogItem } from '../types/types';
 import { Home } from 'lucide-react';
+import 'highlight.js/styles/atom-one-dark.css';
+import hljs from 'highlight.js';
 
 export default function BlogPage() {
   const [redirect, setRedirect] = useState(false);
@@ -25,6 +27,15 @@ export default function BlogPage() {
     getPost();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+
+  useEffect(() => {
+    // Apply syntax highlighting after content is loaded
+    if (blog?.content) {
+      document.querySelectorAll('.ql-syntax').forEach((block: any) => {
+        hljs.highlightBlock(block);
+      });
+    }
+  }, [blog?.content]);
 
   if (redirect) return <Navigate to='/' />;
 

@@ -48,6 +48,16 @@ const createBlog = async (req: Request, res: Response) => {
   const { title, summary, content } = req.body as ICreateBlogInput
   const file = req.file
 
+  console.log(file);
+
+  const mimeType = file?.mimetype.split('/')[0] === 'image' ? true : false
+
+  if (!mimeType) {
+    res.status(406).json({ error: 'Invalid cover image' });
+    return;
+  }
+
+
   if (!file || !title || !summary || !content) {
     res.status(406).json({ error: 'Necessary fields not provided' });
     return;

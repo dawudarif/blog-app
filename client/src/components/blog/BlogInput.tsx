@@ -57,6 +57,7 @@ const BlogInput: React.FC<BlogInputProps> = ({
           id='cover'
           type='file'
           required
+          accept='image/*'
           onChange={(e) => setCover(e.target.files)}
         />
       </div>
