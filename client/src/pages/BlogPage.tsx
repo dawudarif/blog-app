@@ -5,6 +5,7 @@ import { ISingleBlogItem } from '../types/types';
 import { Home } from 'lucide-react';
 import 'highlight.js/styles/atom-one-dark.css';
 import hljs from 'highlight.js';
+import moment from 'moment';
 
 export default function BlogPage() {
   const [redirect, setRedirect] = useState(false);
@@ -55,21 +56,38 @@ export default function BlogPage() {
               {blog.title}
             </Link>
           </div>
-          <h1 className='text-[1.8rem] font-bold capitalize'>{blog.title}</h1>
-          <h2 className='text-[1.4rem] italic font-base capitalize'>
-            {blog.summary}
-          </h2>
-          <img
-            src={blog.cover}
-            alt={blog.title}
-            className='h-50 w-full object-cover'
-          />
-          <div
-            className='blog-content'
-            dangerouslySetInnerHTML={{
-              __html: blog?.content,
-            }}
-          />
+          <div className='flex flex-col gap-4 py-4'>
+            <div className='flex justify-between '>
+              <span>
+                <h1 className='text-[1.8rem] font-bold capitalize'>
+                  {blog.title}
+                </h1>
+                <h2 className='text-[1.4rem] italic font-base capitalize'>
+                  {blog.summary}
+                </h2>
+              </span>
+
+              <span>
+                <h3 className='capitalize text-base font-bold'>
+                  {blog.account.name}
+                </h3>
+                <h3 className='italic text-base font-semibold'>
+                  {moment(blog.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+                </h3>
+              </span>
+            </div>
+            <img
+              src={blog.cover}
+              alt={blog.title}
+              className='h-50 w-full object-cover'
+            />
+            <div
+              className='blog-content'
+              dangerouslySetInnerHTML={{
+                __html: blog?.content,
+              }}
+            />
+          </div>
         </div>
       )}
     </div>
