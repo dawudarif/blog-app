@@ -11,7 +11,7 @@ export default function Header() {
   const { toast } = useToast();
 
   const hrefStyle =
-    'font-semibold text-xl cursor-pointer hover:bg-stone-100 transition-all duration-500 p-2 rounded-md text-[#333]';
+    'font-semibold text-xl cursor-pointer hover:bg-slate-800 transition-all duration-500 p-2 rounded-md text-white';
 
   async function getProfile() {
     const response = await axios.get('/users/profile', {
@@ -50,7 +50,7 @@ export default function Header() {
   }
 
   return (
-    <div className='flex justify-center items-center h-20 bg-[#ffff] shadow-sm gap-4 sticky top-0'>
+    <div className='flex justify-center items-center h-20 bg-slate-950 text-white shadow-sm gap-4 sticky top-0'>
       <Link to='/' className={hrefStyle}>
         Feed
       </Link>

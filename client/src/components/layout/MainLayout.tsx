@@ -1,6 +1,7 @@
 import React from 'react';
 import { Toaster } from '../ui/toaster';
 import Header from './Header';
+import Footer from './Footer';
 
 export default function MainLayout({
   children,
@@ -12,6 +13,7 @@ export default function MainLayout({
       <Toaster />
       <Header />
       {children}
+      <Footer />
     </>
   );
 }
