@@ -50,7 +50,7 @@ export default function Header() {
   }
 
   return (
-    <div className='flex justify-center items-center h-20 bg-slate-950 text-white shadow-sm gap-4 sticky top-0'>
+    <div className='flex justify-center items-center h-20 bg-slate-950 text-white shadow-sm gap-4'>
       <Link to='/' className={hrefStyle}>
         Feed
       </Link>

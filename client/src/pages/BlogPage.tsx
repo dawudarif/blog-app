@@ -1,17 +1,22 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ISingleBlogItem } from '../types/types';
-import { Home } from 'lucide-react';
+import { Home, Pencil, Trash2 } from 'lucide-react';
 import 'highlight.js/styles/atom-one-dark.css';
 import hljs from 'highlight.js';
 import moment from 'moment';
+import { Button } from '../components/ui/button';
+import { UserContext } from '../context/userContext';
 
 export default function BlogPage() {
   const [redirect, setRedirect] = useState(false);
   const [blog, setBlog] = useState<ISingleBlogItem | null>(null);
 
+  const { userInfo } = useContext(UserContext) as any;
   const { id } = useParams();
+
+  console.log(userInfo.id, blog?.accountId);
 
   async function getPost() {
     const response = await axios.get('/blog/get/' + id, {
@@ -74,6 +79,16 @@ export default function BlogPage() {
                 <h3 className='italic text-base font-semibold'>
                   {moment(blog.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
                 </h3>
+                {blog.account.id === userInfo.id && (
+                  <span className='flex justify-between items-center w-full border h-auto'>
+                    <Button className='border-2 border-slate-950 rounded-lg p-2 bg-inherit hover:text-white text-slate-950'>
+                      <Pencil size={25} />
+                    </Button>
+                    <Button className='border-2 border-red-950 rounded-lg p-2 bg-inherit hover:text-white hover:bg-red-800 text-red-950'>
+                      <Trash2 size={25} />
+                    </Button>
+                  </span>
+                )}
               </span>
             </div>
             <img

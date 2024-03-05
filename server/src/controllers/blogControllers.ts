@@ -5,9 +5,10 @@ import { ICreateBlogInput } from '../types/types';
 
 
 const getBlogs = async (req: Request, res: Response) => {
-  const { page = 1, perPage = 6 } = req.params;
+  const { page, perPage = 6 } = req.query;
 
   const offset = (Number(page) - 1) * Number(perPage);
+
   const posts = await prisma.post.findMany({
     select: {
       id: true, title: true, summary: true, cover: true, createdAt: true, updatedAt: true, account: {
@@ -24,8 +25,11 @@ const getBlogs = async (req: Request, res: Response) => {
     take: Number(perPage)
   },);
 
+  const postCount = await prisma.post.count()
 
-  res.status(200).json(posts)
+  const pages = Math.ceil(postCount / Number(perPage))
+
+  res.status(200).json({ pages, posts, resultsFor: page })
 }
 
 const getSingleBlog = async (req: Request, res: Response) => {
@@ -47,8 +51,6 @@ const getSingleBlog = async (req: Request, res: Response) => {
 const createBlog = async (req: Request, res: Response) => {
   const { title, summary, content } = req.body as ICreateBlogInput
   const file = req.file
-
-  console.log(file);
 
   const mimeType = file?.mimetype.split('/')[0] === 'image' ? true : false
 

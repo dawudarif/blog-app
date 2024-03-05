@@ -93,7 +93,7 @@
 }
 
 .blog-content pre {
-  @apply bg-[#333] rounded-lg p-6 w-[80%] font-mono;
+  @apply bg-[#333] rounded-lg p-6 w-[80%] font-mono text-wrap;
 }
 
 .blog-content ol {
