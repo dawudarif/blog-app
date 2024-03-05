@@ -54,6 +54,11 @@ export default function Header() {
       <Link to='/' className={hrefStyle}>
         Feed
       </Link>
+
+      <Link to='/search' className={hrefStyle}>
+        Search
+      </Link>
+
       {userInfo.name ? (
         <>
           <Link to='/blog/create' className={hrefStyle}>
