@@ -6,7 +6,7 @@ export default function BlogSlide({ item }: { item: IBlogItem }) {
   return (
     <Link
       to={`/blog/${item.id}`}
-      className='bg-stone-100 rounded-lg w-[80%] p-4 grid gap-4 grid-cols-2 cursor-pointer hover:shadow-md transition duration-500'
+      className='bg-stone-100 rounded-lg p-4 grid gap-4 grid-cols-2 cursor-pointer hover:shadow-md transition duration-500 w-full'
     >
       <div>
         <img

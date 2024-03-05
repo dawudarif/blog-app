@@ -16,8 +16,6 @@ export default function BlogPage() {
   const { userInfo } = useContext(UserContext) as any;
   const { id } = useParams();
 
-  console.log(userInfo.id, blog?.accountId);
-
   async function getPost() {
     const response = await axios.get('/blog/get/' + id, {
       withCredentials: true,
@@ -94,7 +92,7 @@ export default function BlogPage() {
             <img
               src={blog.cover}
               alt={blog.title}
-              className='h-50 w-full object-cover'
+              className='h-[30rem] w-full object-contain'
             />
             <div
               className='blog-content'

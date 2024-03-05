@@ -11,6 +11,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '../components/ui/pagination';
+import { Button } from '../components/ui/button';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function IndexPage() {
   const [pageNo, setPageNo] = useState(1);
@@ -19,6 +21,8 @@ export default function IndexPage() {
 
   async function getBlogPosts(input?: any) {
     let page = 1;
+
+    if (totalPages === page) return;
 
     if (totalPages) {
       if (input === 1) {
@@ -32,7 +36,6 @@ export default function IndexPage() {
       page = pageNo;
     }
 
-    console.log(page);
     setPageNo(page);
 
     const response = await axios.get(`/blog/get`, {
@@ -50,34 +53,34 @@ export default function IndexPage() {
   }, []);
 
   return (
-    <div className='w-full flex flex-col justify-center items-center'>
-      <div className='flex flex-col justify-center items-center w-[80%] p-4 gap-4'>
+    <div className='w-full flex flex-col justify-center items-center min-h-full'>
+      <div className='grid grid-flow-row grid-cols-2 justify-center items-center w-[80%] p-4 gap-4'>
         {data.map((item: IBlogItem) => (
           <BlogSlide key={item.id} item={item} />
         ))}
       </div>
-      <Pagination>
+      <Pagination className='py-4 flex items-center justify-center'>
         <PaginationContent>
-          <PaginationItem
-            className='cursor-pointer'
-            onClick={() => getBlogPosts(-1)}
-          >
-            <PaginationPrevious />
+          <PaginationItem className='cursor-pointer'>
+            <Button disabled={pageNo === 1} onClick={() => getBlogPosts(-1)}>
+              <ChevronLeft size={30} />
+            </Button>
           </PaginationItem>
           <PaginationItem className='cursor-pointer'>
-            <PaginationLink>{pageNo}</PaginationLink>
+            <PaginationLink className='text-xl underline'>
+              {pageNo}
+            </PaginationLink>
           </PaginationItem>
-          <PaginationItem
-            className='cursor-pointer'
-            onClick={() => getBlogPosts('last')}
-          >
-            <PaginationEllipsis />
+          <PaginationItem onClick={() => getBlogPosts('last')}>
+            <PaginationEllipsis className='cursor-pointer text-xl' />
           </PaginationItem>
-          <PaginationItem>
-            <PaginationNext
-              className='cursor-pointer'
+          <PaginationItem className='cursor-pointer text-lg'>
+            <Button
+              disabled={pageNo === totalPages}
               onClick={() => getBlogPosts(1)}
-            />
+            >
+              <ChevronRight size={25} />
+            </Button>
           </PaginationItem>
         </PaginationContent>
       </Pagination>
