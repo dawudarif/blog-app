@@ -13,38 +13,48 @@ import {
 } from '../components/ui/pagination';
 import { Button } from '../components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import RingLoader from '../components/loaders/ring';
+import BlogSlideLoader from '../components/loaders/BlogSlideLoader';
 
 export default function IndexPage() {
   const [pageNo, setPageNo] = useState(1);
   const [totalPages, setTotalPages] = useState<null | number>(null);
   const [data, setData] = useState<IBlogItem[]>([]);
+  const [loading, setLoading] = useState(false);
 
   async function getBlogPosts(input?: any) {
-    let page = 1;
+    setLoading(true);
 
-    if (totalPages === page) return;
+    try {
+      let page = 1;
 
-    if (totalPages) {
-      if (input === 1) {
-        page = pageNo + 1;
-      } else if (input === -1) {
-        page = pageNo - 1;
-      } else if (input === 'last') {
-        page = totalPages;
+      if (totalPages === page) return;
+
+      if (totalPages) {
+        if (input === 1) {
+          page = pageNo + 1;
+        } else if (input === -1) {
+          page = pageNo - 1;
+        } else if (input === 'last') {
+          page = totalPages;
+        }
+      } else {
+        page = pageNo;
       }
-    } else {
-      page = pageNo;
+
+      setPageNo(page);
+
+      const response = await axios.get(`/blog/get`, {
+        params: { page },
+        withCredentials: true,
+      });
+      setData(response.data.posts);
+      setTotalPages(response.data.pages);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (error) {
+    } finally {
+      setLoading(false);
     }
-
-    setPageNo(page);
-
-    const response = await axios.get(`/blog/get`, {
-      params: { page },
-      withCredentials: true,
-    });
-    setData(response.data.posts);
-    setTotalPages(response.data.pages);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   useEffect(() => {
@@ -53,11 +63,21 @@ export default function IndexPage() {
   }, []);
 
   return (
-    <div className='w-full flex flex-col justify-center items-center min-h-full'>
+    <div className='w-full flex flex-col justify-stretch items-center min-h-[80vh]  border border-blue-500'>
       <div className='grid grid-flow-row grid-cols-2 justify-center items-center w-[80%] p-4 gap-4'>
-        {data.map((item: IBlogItem) => (
-          <BlogSlide key={item.id} item={item} />
-        ))}
+        {true ? (
+          <>
+            {[0, 1, 2, 3, 4, 5, 6, 7].map((i: number) => (
+              <BlogSlideLoader key={i} />
+            ))}
+          </>
+        ) : (
+          <>
+            {data.map((item: IBlogItem) => (
+              <BlogSlide key={item.id} item={item} />
+            ))}
+          </>
+        )}
       </div>
       <Pagination className='py-4 flex items-center justify-center'>
         <PaginationContent>

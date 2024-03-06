@@ -9,7 +9,7 @@ export default function SearchPage() {
     <div className='flex justify-stretch py-20 items-center flex-col min-h-[80vh] w-full'>
       <div className='flex justify-center items-center gap-4'>
         <Input
-          className='w-72'
+          className='w-72 font-semibold'
           placeholder='News...'
           value={search}
           onChange={(e) => setSearch(e.target.value)}

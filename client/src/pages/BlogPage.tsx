@@ -2,16 +2,16 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ISingleBlogItem } from '../types/types';
-import { Home, Pencil, Trash2 } from 'lucide-react';
+import { Home, Pencil, Trash2, User } from 'lucide-react';
 import 'highlight.js/styles/atom-one-dark.css';
 import hljs from 'highlight.js';
 import moment from 'moment';
-import { Button } from '../components/ui/button';
 import { UserContext } from '../context/userContext';
 
 export default function BlogPage() {
   const [redirect, setRedirect] = useState(false);
   const [blog, setBlog] = useState<ISingleBlogItem | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const { userInfo } = useContext(UserContext) as any;
   const { id } = useParams();
@@ -48,59 +48,61 @@ export default function BlogPage() {
       {blog && (
         <div className='w-[80%]'>
           <div className='flex items-center gap-4'>
-            <Link to='/' className='hover:text-purple-600'>
+            <Link to='/' className='hover:text-slate-900 hover:underline'>
               <Home size={22} />
             </Link>
             <span className='text-semibold'> / </span>
             <Link
               to={`/blog/${blog.id}`}
-              className='hover:text-purple-600 text-semibold'
+              className='hover:text-slate-900 hover:underline text-semibold'
             >
               {blog.title}
             </Link>
           </div>
-          <div className='flex flex-col gap-4 py-4'>
-            <div className='flex justify-between '>
-              <span>
-                <h1 className='text-[1.8rem] font-bold capitalize'>
-                  {blog.title}
-                </h1>
-                <h2 className='text-[1.4rem] italic font-base capitalize'>
-                  {blog.summary}
-                </h2>
-              </span>
-
-              <span>
-                <h3 className='capitalize text-base font-bold'>
+          <span>
+            <span className='flex justify-between items-center'>
+              <h1 className='text-[1.8rem] font-bold capitalize'>
+                {blog.title}
+              </h1>
+              {blog.account.id === userInfo.id && (
+                <span className='flex justify-between items-center gap-4 h-auto'>
+                  <Pencil size={15} />
+                  <Trash2 size={15} />
+                </span>
+              )}
+            </span>
+            <h2 className='text-[1.4rem] italic font-base capitalize'>
+              {blog.summary}
+            </h2>
+          </span>
+          <div className='flex flex-col gap-4 py-2 border-t-2 border-b-2 border-slate-950 my-2'>
+            <span className='flex justify-between items-center'>
+              <div className='flex justify-center items-center font-bold gap-3'>
+                <span className='rounded-full bg-slate-900 p-2'>
+                  <User color='white' size={30} />
+                </span>
+                <h3 className='capitalize text-lg font-semibold'>
                   {blog.account.name}
                 </h3>
-                <h3 className='italic text-base font-semibold'>
-                  {moment(blog.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+              </div>
+              <span>
+                <h3 className='italic text-base font-semibold text-nowrap'>
+                  {moment(blog.createdAt).format('MMMM Do, YYYY')}
                 </h3>
-                {blog.account.id === userInfo.id && (
-                  <span className='flex justify-between items-center w-full border h-auto'>
-                    <Button className='border-2 border-slate-950 rounded-lg p-2 bg-inherit hover:text-white text-slate-950'>
-                      <Pencil size={25} />
-                    </Button>
-                    <Button className='border-2 border-red-950 rounded-lg p-2 bg-inherit hover:text-white hover:bg-red-800 text-red-950'>
-                      <Trash2 size={25} />
-                    </Button>
-                  </span>
-                )}
               </span>
-            </div>
-            <img
-              src={blog.cover}
-              alt={blog.title}
-              className='h-[30rem] w-full object-contain'
-            />
-            <div
-              className='blog-content'
-              dangerouslySetInnerHTML={{
-                __html: blog?.content,
-              }}
-            />
+            </span>
           </div>
+          <img
+            src={blog.cover}
+            alt={blog.title}
+            className='h-[30rem] w-full object-contain'
+          />
+          <div
+            className='blog-content'
+            dangerouslySetInnerHTML={{
+              __html: blog?.content,
+            }}
+          />
         </div>
       )}
     </div>
