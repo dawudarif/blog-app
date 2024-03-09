@@ -78,6 +78,7 @@ const createBlog = async (req: Request, res: Response) => {
   });
 
   const coverImageUrl = uploadCover.url
+  const uploadCoverPublicId = uploadCover.public_id
 
   const createBlog = await prisma.post.create({
     data: {
@@ -85,6 +86,7 @@ const createBlog = async (req: Request, res: Response) => {
       summary,
       content,
       cover: coverImageUrl,
+      coverPublicId: uploadCoverPublicId,
       accountId: req.user.id
     }, include: {
       account: {
