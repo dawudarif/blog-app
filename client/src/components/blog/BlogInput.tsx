@@ -48,7 +48,6 @@ const BlogInput: React.FC<BlogInputProps> = ({
         placeholder='Enter Summary'
         type='text'
         className='text-base'
-        required
         value={summary}
         onChange={(e) => setSummary(e.target.value)}
       />

@@ -7,6 +7,7 @@ import 'highlight.js/styles/atom-one-dark.css';
 import hljs from 'highlight.js';
 import moment from 'moment';
 import { UserContext } from '../context/userContext';
+import BlogContentLoader from '../components/loaders/BlogContentLoader';
 
 export default function BlogPage() {
   const [redirect, setRedirect] = useState(false);
@@ -17,13 +18,19 @@ export default function BlogPage() {
   const { id } = useParams();
 
   async function getPost() {
-    const response = await axios.get('/blog/get/' + id, {
-      withCredentials: true,
-    });
-    if (response.status === 200) {
-      setBlog(response.data);
-    } else {
-      setRedirect(true);
+    try {
+      setLoading(true);
+      const response = await axios.get('/blog/get/' + id, {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        setBlog(response.data);
+      } else {
+        setRedirect(true);
+      }
+    } catch (error) {
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -42,6 +49,8 @@ export default function BlogPage() {
   }, [blog?.content]);
 
   if (redirect) return <Navigate to='/' />;
+
+  if (loading) return <BlogContentLoader />;
 
   return (
     <div className='flex justify-center items-center bg-stone-50 py-6'>

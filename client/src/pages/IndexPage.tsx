@@ -1,20 +1,17 @@
 import axios from 'axios';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import BlogSlide from '../components/index/BlogSlide';
-import { IBlogItem } from '../types/types';
+import BlogSlideLoader from '../components/loaders/BlogSlideLoader';
+import { Button } from '../components/ui/button';
 import {
   Pagination,
   PaginationContent,
   PaginationEllipsis,
   PaginationItem,
   PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
 } from '../components/ui/pagination';
-import { Button } from '../components/ui/button';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import RingLoader from '../components/loaders/ring';
-import BlogSlideLoader from '../components/loaders/BlogSlideLoader';
+import { IBlogItem } from '../types/types';
 
 export default function IndexPage() {
   const [pageNo, setPageNo] = useState(1);
@@ -65,7 +62,7 @@ export default function IndexPage() {
   return (
     <div className='w-full flex flex-col justify-stretch items-center min-h-[80vh]  border border-blue-500'>
       <div className='grid grid-flow-row grid-cols-2 justify-center items-center w-[80%] p-4 gap-4'>
-        {true ? (
+        {loading ? (
           <>
             {[0, 1, 2, 3, 4, 5, 6, 7].map((i: number) => (
               <BlogSlideLoader key={i} />

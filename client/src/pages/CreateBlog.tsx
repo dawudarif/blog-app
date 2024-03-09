@@ -38,7 +38,7 @@ export default function CreateBlog() {
           title: 'Success',
           description: 'Blog post created',
         });
-        // setRedirect(true);
+        setRedirect(true);
       } else {
         throw new Error();
       }

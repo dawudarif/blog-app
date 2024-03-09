@@ -107,3 +107,7 @@
 .blog-content blockquote {
   @apply bg-slate-100 rounded-lg p-4 font-serif text-xl;
 }
+
+.blog-content img {
+  @apply h-80 w-[60%] object-contain py-4;
+}

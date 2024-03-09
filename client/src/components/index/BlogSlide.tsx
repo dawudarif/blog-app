@@ -17,17 +17,19 @@ export default function BlogSlide({ item }: { item: IBlogItem }) {
       </div>
       <div className='flex-col flex gap-4'>
         <div>
-          <h1 className='text-[1.8rem] font-bold capitalize'>{item.title}</h1>
-          <h2 className='text-[1.4rem] italic font-base capitalize'>
+          <h1 className='text-[1.4rem] font-bold capitalize line-clamp-3'>
+            {item.title}
+          </h1>
+          <h2 className='text-[1.2rem] italic font-base capitalize'>
             {item.summary}
           </h2>
         </div>
         <div>
-          <h2 className='font-mono font-semibold text-[1.2rem] capitalize'>
+          <h2 className='font-mono font-semibold text-[1rem] capitalize'>
             {item.account.name}
           </h2>
-          <h4 className='text-[1.2rem] font-mono'>
-            {moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+          <h4 className='text-[1rem] font-mono'>
+            {moment(item.createdAt).format('MMMM Do, YYYY')}
           </h4>
         </div>
       </div>
