@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
 import { cloudinary } from '../utils/cloudinary';
 import { prisma } from '../prisma/prisma';
-import { ICreateBlogInput } from '../types/types';
 
 
 const getBlogs = async (req: Request, res: Response) => {
-  const { page, perPage = 6 } = req.query;
+  const { page, perPage = 12 } = req.query;
 
   const offset = (Number(page) - 1) * Number(perPage);
 
@@ -49,7 +48,7 @@ const getSingleBlog = async (req: Request, res: Response) => {
 }
 
 const createBlog = async (req: Request, res: Response) => {
-  const { title, summary, content } = req.body as ICreateBlogInput
+  const { title, summary, content } = req.body
   const file = req.file
 
   const mimeType = file?.mimetype.split('/')[0] === 'image' ? true : false
@@ -103,5 +102,25 @@ const createBlog = async (req: Request, res: Response) => {
 const updateBlog = async (req: Request, res: Response) => { }
 
 
+const deleteBlog = async (req: Request, res: Response) => {
+  const { id } = req.params
 
-export { createBlog, updateBlog, getBlogs, getSingleBlog }
+  const isAuthor = await prisma.post.findUnique({ where: { id, accountId: req.user.id } })
+
+  if (!isAuthor) {
+    res.status(401).json({ error: 'Authentication error' })
+    return;
+  }
+
+  const deleteImage = await cloudinary.uploader.destroy(isAuthor.coverPublicId)
+  const deletePost = await prisma.post.delete({ where: { id } })
+
+
+  if (deletePost && deleteImage) {
+    res.status(200).json({ delete: true })
+  }
+}
+
+
+
+export { createBlog, updateBlog, getBlogs, getSingleBlog, deleteBlog }

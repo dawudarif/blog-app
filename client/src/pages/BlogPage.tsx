@@ -1,18 +1,23 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
-import { Link, Navigate, useParams } from 'react-router-dom';
-import { ISingleBlogItem } from '../types/types';
-import { Home, Pencil, Trash2, User } from 'lucide-react';
-import 'highlight.js/styles/atom-one-dark.css';
 import hljs from 'highlight.js';
+import 'highlight.js/styles/atom-one-dark.css';
+import { Home, Pencil, Trash2, User } from 'lucide-react';
 import moment from 'moment';
-import { UserContext } from '../context/userContext';
+import { useContext, useEffect, useState } from 'react';
+import { Link, Navigate, useParams } from 'react-router-dom';
 import BlogContentLoader from '../components/loaders/BlogContentLoader';
+import RingLoader from '../components/loaders/ring';
+import { useToast } from '../components/ui/use-toast';
+import { UserContext } from '../context/userContext';
+import { ISingleBlogItem } from '../types/types';
 
 export default function BlogPage() {
   const [redirect, setRedirect] = useState(false);
   const [blog, setBlog] = useState<ISingleBlogItem | null>(null);
   const [loading, setLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+
+  const { toast } = useToast();
 
   const { userInfo } = useContext(UserContext) as any;
   const { id } = useParams();
@@ -31,6 +36,28 @@ export default function BlogPage() {
     } catch (error) {
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function deletePost() {
+    try {
+      setDeleteLoading(true);
+      const response = await axios.get('/blog/delete/' + id, {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        setRedirect(true);
+      } else {
+        throw new Error();
+      }
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: error.response.data.error,
+      });
+    } finally {
+      setDeleteLoading(false);
     }
   }
 
@@ -78,9 +105,18 @@ export default function BlogPage() {
                   <span className='hover:bg-slate-950 hover:text-white text-slate-950 p-4 rounded-lg cursor-pointer'>
                     <Pencil size={15} />
                   </span>
-                  <span className='hover:bg-slate-950 hover:text-white text-slate-950 p-4 rounded-lg cursor-pointer'>
-                    <Trash2 size={15} />
-                  </span>
+                  {deleteLoading ? (
+                    <span className=' text-slate-950  p-4 rounded-lg cursor-pointer'>
+                      <RingLoader size={20} stroke={4} />
+                    </span>
+                  ) : (
+                    <span
+                      className='hover:bg-slate-950 hover:text-white text-slate-950 p-4 rounded-lg cursor-pointer '
+                      onClick={() => deletePost()}
+                    >
+                      <Trash2 size={15} />
+                    </span>
+                  )}
                 </span>
               )}
             </span>
@@ -108,7 +144,7 @@ export default function BlogPage() {
           <img
             src={blog.cover}
             alt={blog.title}
-            className='h-[30rem] w-full object-contain'
+            className='h-[30rem] w-full object-contain my-8'
           />
           <div
             className='blog-content'
