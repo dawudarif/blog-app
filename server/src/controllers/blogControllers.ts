@@ -60,7 +60,7 @@ const createBlog = async (req: Request, res: Response) => {
   }
 
 
-  if (!file || !title || !summary || !content) {
+  if (!file || !title || !content) {
     res.status(406).json({ error: 'Necessary fields not provided' });
     return;
   }
