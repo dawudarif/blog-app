@@ -63,7 +63,7 @@ export default function BlogPage() {
             <span className='text-semibold'> / </span>
             <Link
               to={`/blog/${blog.id}`}
-              className='hover:text-slate-900 hover:underline text-semibold'
+              className='hover:text-slate-900 font-semibold hover:underline text-semibold'
             >
               {blog.title}
             </Link>
@@ -75,8 +75,12 @@ export default function BlogPage() {
               </h1>
               {blog.account.id === userInfo.id && (
                 <span className='flex justify-between items-center gap-4 h-auto'>
-                  <Pencil size={15} />
-                  <Trash2 size={15} />
+                  <span className='hover:bg-slate-950 hover:text-white text-slate-950 p-4 rounded-lg cursor-pointer'>
+                    <Pencil size={15} />
+                  </span>
+                  <span className='hover:bg-slate-950 hover:text-white text-slate-950 p-4 rounded-lg cursor-pointer'>
+                    <Trash2 size={15} />
+                  </span>
                 </span>
               )}
             </span>
@@ -84,7 +88,7 @@ export default function BlogPage() {
               {blog.summary}
             </h2>
           </span>
-          <div className='flex flex-col gap-4 py-2 border-t-2 border-b-2 border-slate-950 my-2'>
+          <div className='flex flex-col gap-4 py-4 border-t-2 border-b-2 border-slate-950 my-8'>
             <span className='flex justify-between items-center'>
               <div className='flex justify-center items-center font-bold gap-3'>
                 <span className='rounded-full bg-slate-900 p-2'>
@@ -96,7 +100,7 @@ export default function BlogPage() {
               </div>
               <span>
                 <h3 className='italic text-base font-semibold text-nowrap'>
-                  {moment(blog.createdAt).format('MMMM Do, YYYY')}
+                  Published: {moment(blog.createdAt).format('MMMM Do, YYYY')}
                 </h3>
               </span>
             </span>
