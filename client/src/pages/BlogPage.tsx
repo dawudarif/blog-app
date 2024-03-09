@@ -10,6 +10,12 @@ import RingLoader from '../components/loaders/ring';
 import { useToast } from '../components/ui/use-toast';
 import { UserContext } from '../context/userContext';
 import { ISingleBlogItem } from '../types/types';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '../components/ui/popover';
+import { Button } from '../components/ui/button';
 
 export default function BlogPage() {
   const [redirect, setRedirect] = useState(false);
@@ -110,12 +116,28 @@ export default function BlogPage() {
                       <RingLoader size={20} stroke={4} />
                     </span>
                   ) : (
-                    <span
-                      className='hover:bg-slate-950 hover:text-white text-slate-950 p-4 rounded-lg cursor-pointer '
-                      onClick={() => deletePost()}
-                    >
-                      <Trash2 size={15} />
-                    </span>
+                    <Popover>
+                      <PopoverTrigger className='hover:bg-slate-950 hover:text-white text-slate-950 p-4 rounded-lg cursor-pointer '>
+                        <Trash2 size={15} />
+                      </PopoverTrigger>
+                      <PopoverContent className='flex flex-col gap-2'>
+                        <p className='text-base font-semibold'>
+                          Are you sure you want to delete this blog post?
+                        </p>
+                        <Button
+                          onClick={() => deletePost()}
+                          className='bg-slate-950 rounded-lg'
+                        >
+                          <>
+                            {deleteLoading ? (
+                              <RingLoader size={20} stroke={4} />
+                            ) : (
+                              <>Delete</>
+                            )}
+                          </>
+                        </Button>
+                      </PopoverContent>
+                    </Popover>
                   )}
                 </span>
               )}
