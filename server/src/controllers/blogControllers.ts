@@ -99,7 +99,38 @@ const createBlog = async (req: Request, res: Response) => {
   res.status(201).json({ createBlog })
 }
 
-const updateBlog = async (req: Request, res: Response) => { }
+const searchBlogs = async (req: Request, res: Response) => {
+  const { search } = req.params;
+
+  if (!search) {
+    return res.status(400).json({ error: 'Missing search term' });
+  }
+
+  try {
+    const searchData = await prisma.post.findMany({
+      where: {
+        OR: [
+          { title: { contains: search, mode: 'insensitive' } },
+          { content: { contains: search, mode: 'insensitive' } },
+        ],
+      },
+      select: {
+        id: true, title: true, summary: true, cover: true, createdAt: true, updatedAt: true, account: {
+          select: {
+            id: true,
+            name: true
+          }
+        }
+      },
+    });
+
+    res.status(200).json(searchData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 
 
 const deleteBlog = async (req: Request, res: Response) => {
@@ -123,4 +154,4 @@ const deleteBlog = async (req: Request, res: Response) => {
 
 
 
-export { createBlog, updateBlog, getBlogs, getSingleBlog, deleteBlog }
+export { createBlog, searchBlogs, getBlogs, getSingleBlog, deleteBlog }

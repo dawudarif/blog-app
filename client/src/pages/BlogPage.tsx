@@ -1,7 +1,7 @@
 import axios from 'axios';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css';
-import { Home, Pencil, Trash2, User } from 'lucide-react';
+import { Home, Trash2, User } from 'lucide-react';
 import moment from 'moment';
 import { useContext, useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
@@ -107,10 +107,7 @@ export default function BlogPage() {
                 {blog.title}
               </h1>
               {blog.account.id === userInfo.id && (
-                <span className='flex justify-between items-center gap-4 h-auto'>
-                  <span className='hover:bg-slate-950 hover:text-white text-slate-950 p-4 rounded-lg cursor-pointer'>
-                    <Pencil size={15} />
-                  </span>
+                <>
                   {deleteLoading ? (
                     <span className=' text-slate-950  p-4 rounded-lg cursor-pointer'>
                       <RingLoader size={20} stroke={4} />
@@ -139,7 +136,7 @@ export default function BlogPage() {
                       </PopoverContent>
                     </Popover>
                   )}
-                </span>
+                </>
               )}
             </span>
             <h2 className='text-[1.4rem] italic font-base capitalize'>
