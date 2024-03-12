@@ -32,7 +32,7 @@ const BlogInput: React.FC<BlogInputProps> = ({
 }) => {
   return (
     <form
-      className='w-[80%] gap-2 flex flex-col mt-10 mb-20'
+      className='w-[80%] sm:w-full xs:w-full px-2 gap-2 flex flex-col mt-10 mb-20'
       onSubmit={onSubmitFn}
     >
       <h1 className='text-center text-3xl font-bold my-4'>{headingText}</h1>
@@ -65,7 +65,7 @@ const BlogInput: React.FC<BlogInputProps> = ({
       </div>
       <Button
         variant='default'
-        className='w-full mt-4'
+        className='w-full mt-4 xs:mt-10 sm:mt-10 '
         type='submit'
         disabled={loading}
       >

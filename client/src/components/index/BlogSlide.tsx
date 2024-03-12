@@ -12,15 +12,15 @@ export default function BlogSlide({ item }: { item: IBlogItem }) {
         <img
           src={item.cover}
           alt={item.title}
-          className='h-50 w-full object-cover'
+          className='h-40 w-full object-cover'
         />
       </div>
       <div className='flex-col flex gap-4'>
         <div>
-          <h1 className='text-[1.4rem] font-bold capitalize line-clamp-3'>
+          <h1 className='text-[1.2rem] font-bold capitalize line-clamp-3'>
             {item.title}
           </h1>
-          <h2 className='text-[1.2rem] italic font-base capitalize'>
+          <h2 className='text-[1rem] italic font-base capitalize'>
             {item.summary}
           </h2>
         </div>
