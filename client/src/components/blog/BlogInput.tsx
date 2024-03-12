@@ -35,7 +35,9 @@ const BlogInput: React.FC<BlogInputProps> = ({
       className='w-[80%] sm:w-full xs:w-full px-2 gap-2 flex flex-col mt-10 mb-20'
       onSubmit={onSubmitFn}
     >
-      <h1 className='text-center text-3xl font-bold my-4'>{headingText}</h1>
+      <h1 className='text-center text-3xl font-bold my-4 sm:text-2xl xs:text-2xl'>
+        {headingText}
+      </h1>
       <Input
         placeholder='Enter Title'
         type='text'
