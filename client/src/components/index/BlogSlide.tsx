@@ -6,16 +6,16 @@ export default function BlogSlide({ item }: { item: IBlogItem }) {
   return (
     <Link
       to={`/blog/${item.id}`}
-      className='bg-stone-100 rounded-lg p-4 grid gap-4 grid-cols-2 cursor-pointer hover:shadow-md transition duration-500 w-full'
+      className='bg-stone-100 rounded-lg p-4 flex xs:flex-col sm:flex-col gap-4 cursor-pointer transition duration-500 w-full'
     >
-      <div>
+      <div className='w-[50%] xs:w-full sm:w-full'>
         <img
           src={item.cover}
           alt={item.title}
           className='h-40 w-full object-cover'
         />
       </div>
-      <div className='flex-col flex gap-4'>
+      <div className='flex-col flex gap-4 w-[50%] xs:w-full sm:w-full'>
         <div>
           <h1 className='text-[1.2rem] font-bold capitalize line-clamp-3'>
             {item.title}

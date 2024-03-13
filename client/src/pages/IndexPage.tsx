@@ -60,8 +60,8 @@ export default function IndexPage() {
   }, []);
 
   return (
-    <div className='w-full flex flex-col justify-stretch items-center min-h-[80vh]  border border-blue-500'>
-      <div className='grid grid-flow-row grid-cols-2 justify-center items-center w-[80%] p-4 gap-4'>
+    <div className='w-full flex flex-col justify-stretch items-center min-h-[80vh]'>
+      <div className='grid grid-flow-row grid-cols-2 xs:grid-cols-1 justify-center items-center w-[80%] md:w-[90%] sm:w-[90%] xs:w-full xs:p-2 md:p-2 p-4 gap-4'>
         {loading ? (
           <>
             {[0, 1, 2, 3, 4, 5, 6, 7].map((i: number) => (
