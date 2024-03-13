@@ -78,25 +78,25 @@ export default function IndexPage() {
       </div>
       <Pagination className='py-4 flex items-center justify-center'>
         <PaginationContent>
-          <PaginationItem className='cursor-pointer'>
+          <PaginationItem className='cursor-pointer text-lg sm:text-base xs:text-base'>
             <Button disabled={pageNo === 1} onClick={() => getBlogPosts(-1)}>
-              <ChevronLeft size={30} />
+              <ChevronLeft size={20} />
             </Button>
           </PaginationItem>
           <PaginationItem className='cursor-pointer'>
-            <PaginationLink className='text-xl underline'>
+            <PaginationLink className='text-xl sm:text-base xs:text-base underline'>
               {pageNo}
             </PaginationLink>
           </PaginationItem>
           <PaginationItem onClick={() => getBlogPosts('last')}>
             <PaginationEllipsis className='cursor-pointer text-xl' />
           </PaginationItem>
-          <PaginationItem className='cursor-pointer text-lg'>
+          <PaginationItem className='cursor-pointer text-lg sm:text-base xs:text-base'>
             <Button
               disabled={pageNo === totalPages}
               onClick={() => getBlogPosts(1)}
             >
-              <ChevronRight size={25} />
+              <ChevronRight size={20} />
             </Button>
           </PaginationItem>
         </PaginationContent>
