@@ -28,23 +28,25 @@ export default function SearchPage() {
   }
 
   return (
-    <div className='flex justify-stretch py-20 items-center flex-col min-h-[80vh] w-full'>
-      <div className='flex justify-center items-center gap-4'>
+    <div className='flex justify-stretch py-20 items-center flex-col min-h-[38rem] w-full'>
+      <div className='flex justify-center items-center sm:flex-col xs:flex-col xs:items-start sm:items-start gap-4 w-[40%] sm:w-[95%] xs:w-[95%] md:w-[50%]'>
         <Input
-          className='w-72 font-semibold'
+          className='w-[70%] sm:w-full xs:w-full font-semibold focus-visible:ring-0 focus-visible:ring-offset-0 p-6'
           placeholder='Search...'
           required
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <Button className='w-32' onClick={searchData}>
+        <Button
+          className='w-[30%] p-6 sm:w-full xs:w-full'
+          onClick={searchData}
+        >
           Search
         </Button>
       </div>
-      {loading}
 
       {loading ? (
-        <div className='grid grid-flow-row grid-cols-2 px-20 gap-4 py-10 w-full'>
+        <div className='grid grid-flow-row grid-cols-2 md:grid-cols-1 sm:grid-cols-1 xs:grid-cols-1 px-20 sm:px-2 xs:px-2 gap-4 py-4'>
           <>
             {[0, 1, 2, 3].map((i: number) => (
               <BlogSlideLoader key={i} />
@@ -57,7 +59,7 @@ export default function SearchPage() {
             <h1 className='py-4 font-semibold'>
               Showing results for "{resultsFor}"
             </h1>
-            <div className='grid grid-flow-row grid-cols-2 px-20 gap-4 py-10'>
+            <div className='grid grid-flow-row grid-cols-2 md:grid-cols-1 sm:grid-cols-1 xs:grid-cols-1 px-20 sm:px-2 xs:px-2 gap-4 py-4'>
               {data.map((item) => (
                 <BlogSlide key={item.id} item={item} />
               ))}
