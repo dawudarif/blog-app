@@ -57,31 +57,34 @@ export default function LoginPage() {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center bg-slate-50 w-full h-[35rem] gap-10'>
+    <div className='flex flex-col items-center justify-center bg-slate-50 w-full h-[38rem] gap-10'>
       <div className='flex flex-col justify-center items-center gap-6'>
-        <h1 className='font-bold text-3xl text-[#5555]'>
+        <h1 className='font-bold text-3xl sm:text-2xl xs:text-2xl text-[#5555] text-center'>
           Login to Your account
         </h1>
         <KeyRound size={45} color='#5555' />
       </div>
-      <form className='w-[30%] gap-2 flex flex-col' onSubmit={loginUser}>
+      <form
+        className='w-[40%] sm:w-[95%] xs:w-[95%] md:w-[50%] gap-2 flex flex-col h-auto'
+        onSubmit={loginUser}
+      >
         <Input
           placeholder='john@example.com'
           type='email'
-          className='text-base'
+          className='text-base p-6 focus-visible:ring-0 focus-visible:ring-offset-0'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <Input
           placeholder='Password'
           type='password'
-          className='text-base'
+          className='text-base p-6 focus-visible:ring-0 focus-visible:ring-offset-0'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <Button
           variant='default'
-          className='w-full mt-4'
+          className='w-full mt-4 p-6'
           type='submit'
           disabled={loading}
         >
