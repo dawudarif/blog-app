@@ -27,6 +27,9 @@ export default function SearchPage() {
     }
   }
 
+  const class1 =
+    'grid grid-flow-row grid-cols-1 lg:grid-cols-2 px-20 sm:px-2 xs:px-2 gap-4 py-4 w-full';
+
   return (
     <div className='flex justify-stretch py-20 items-center flex-col min-h-[38rem] w-full'>
       <div className='flex justify-center items-center sm:flex-col xs:flex-col xs:items-start sm:items-start gap-4 w-[40%] sm:w-[95%] xs:w-[95%] md:w-[50%]'>
@@ -46,9 +49,9 @@ export default function SearchPage() {
       </div>
 
       {loading ? (
-        <div className='grid grid-flow-row grid-cols-2 md:grid-cols-1 sm:grid-cols-1 xs:grid-cols-1 px-20 sm:px-2 xs:px-2 gap-4 py-4'>
+        <div className={class1}>
           <>
-            {[0, 1, 2, 3].map((i: number) => (
+            {[0, 1, 2, 3, 4, 5].map((i: number) => (
               <BlogSlideLoader key={i} />
             ))}
           </>
@@ -59,7 +62,7 @@ export default function SearchPage() {
             <h1 className='py-4 font-semibold'>
               Showing results for "{resultsFor}"
             </h1>
-            <div className='grid grid-flow-row grid-cols-2 md:grid-cols-1 sm:grid-cols-1 xs:grid-cols-1 px-20 sm:px-2 xs:px-2 gap-4 py-4'>
+            <div className={class1}>
               {data.map((item) => (
                 <BlogSlide key={item.id} item={item} />
               ))}
