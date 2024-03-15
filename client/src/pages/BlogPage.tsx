@@ -86,7 +86,7 @@ export default function BlogPage() {
   if (loading) return <BlogContentLoader />;
 
   return (
-    <div className='flex justify-center items-center bg-stone-50 py-6'>
+    <div className='flex justify-center items-center bg-stone-50 py-6 px-0'>
       {blog && (
         <div className='w-[80%]'>
           <div className='flex items-center gap-4'>
@@ -109,7 +109,7 @@ export default function BlogPage() {
               {blog.account.id === userInfo.id && (
                 <>
                   {deleteLoading ? (
-                    <span className=' text-slate-950  p-4 rounded-lg cursor-pointer'>
+                    <span className='text-slate-950 p-4 rounded-lg cursor-pointer'>
                       <RingLoader size={20} stroke={4} />
                     </span>
                   ) : (
@@ -144,7 +144,7 @@ export default function BlogPage() {
             </h2>
           </span>
           <div className='flex flex-col gap-4 py-4 border-t-2 border-b-2 border-slate-950 my-8'>
-            <span className='flex justify-between items-center'>
+            <span className='flex justify-between items-center sm:flex-col sm:items-start sm:gap-4 xs:flex-col xs:items-start xs:gap-4'>
               <div className='flex justify-center items-center font-bold gap-3'>
                 <span className='rounded-full bg-slate-900 p-2'>
                   <User color='white' size={30} />
@@ -163,7 +163,7 @@ export default function BlogPage() {
           <img
             src={blog.cover}
             alt={blog.title}
-            className='h-[30rem] w-full object-contain my-8'
+            className='h-[30rem] w-full object-contain my-8 xs:my-4 sm:my-4 sm:h-auto xs:h-auto'
           />
           <div
             className='blog-content'
