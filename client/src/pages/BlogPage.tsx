@@ -102,7 +102,7 @@ export default function BlogPage() {
             </Link>
           </div>
           <span>
-            <span className='flex justify-between items-center'>
+            <span className='flex justify-between items-center gap-2 sm:flex-col xs:flex-col sm:items-start xs:items-start'>
               <h1 className='text-[1.8rem] font-bold capitalize'>
                 {blog.title}
               </h1>
@@ -114,8 +114,8 @@ export default function BlogPage() {
                     </span>
                   ) : (
                     <Popover>
-                      <PopoverTrigger className='hover:bg-slate-950 hover:text-white text-slate-950 p-4 rounded-lg cursor-pointer '>
-                        <Trash2 size={15} />
+                      <PopoverTrigger className='hover:bg-slate-950 hover:text-white text-slate-950 p-2 rounded-lg cursor-pointer border-2 border-slate-400 flex justify-center items-center gap-2'>
+                        <Trash2 size={18} /> <p>Delete Post</p>
                       </PopoverTrigger>
                       <PopoverContent className='flex flex-col gap-2'>
                         <p className='text-base font-semibold'>
