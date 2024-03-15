@@ -111,7 +111,7 @@ const searchBlogs = async (req: Request, res: Response) => {
       where: {
         OR: [
           { title: { contains: search, mode: 'insensitive' } },
-          { content: { contains: search, mode: 'insensitive' } },
+          // { content: { contains: search, mode: 'insensitive' } },
         ],
       },
       select: {
