@@ -59,7 +59,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center bg-slate-50 w-full h-[38rem] gap-10'>
+    <div className='flex flex-col items-center justify-center bg-slate-50 w-full min-h-[38rem] gap-10'>
       <div className='flex flex-col justify-center items-center gap-6'>
         <h1 className='font-bold text-3xl sm:text-2xl xs:text-2xl text-[#5555]'>
           Register a New Account

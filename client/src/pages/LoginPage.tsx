@@ -57,7 +57,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center bg-slate-50 w-full h-[38rem] gap-10'>
+    <div className='flex flex-col items-center justify-center bg-slate-50 w-full lg:min-h-[38rem] md:min-h-[38rem] sm:h-[30rem] xs:h-[30rem] gap-10'>
       <div className='flex flex-col justify-center items-center gap-6'>
         <h1 className='font-bold text-3xl sm:text-2xl xs:text-2xl text-[#5555] text-center'>
           Login to Your account

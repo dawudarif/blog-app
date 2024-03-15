@@ -115,7 +115,7 @@ export default function BlogPage() {
                   ) : (
                     <Popover>
                       <PopoverTrigger className='hover:bg-slate-950 hover:text-white text-slate-950 p-2 rounded-lg cursor-pointer border-2 border-slate-400 flex justify-center items-center gap-2'>
-                        <Trash2 size={18} /> <p>Delete Post</p>
+                        <Trash2 size={18} /> <p>Delete Blog</p>
                       </PopoverTrigger>
                       <PopoverContent className='flex flex-col gap-2'>
                         <p className='text-base font-semibold'>
