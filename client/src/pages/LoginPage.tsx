@@ -5,9 +5,9 @@ import '../index.css';
 import axios from 'axios';
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import RingLoader from '../components/loaders/ring';
-import { useToast } from '../components/ui/use-toast';
 import { KeyRound } from 'lucide-react';
 import { UserContext } from '../context/userContext';
+import { toast } from 'sonner';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -16,7 +16,6 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   const { userInfo, setUserInfo } = useContext(UserContext) as any;
-  const { toast } = useToast();
 
   async function loginUser(e: FormEvent) {
     e.preventDefault();
@@ -36,11 +35,7 @@ export default function LoginPage() {
         throw new Error();
       }
     } catch (error: any) {
-      toast({
-        variant: 'destructive',
-        title: 'Error',
-        description: error.response.data.error,
-      });
+      toast(error.response.data.error);
     } finally {
       setLoading(false);
     }

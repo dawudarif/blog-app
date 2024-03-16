@@ -5,7 +5,7 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import '../index.css';
 import RingLoader from '../components/loaders/ring';
-import { useToast } from '../components/ui/use-toast';
+import { toast } from 'sonner';
 import { KeyRound } from 'lucide-react';
 import { UserContext } from '../context/userContext';
 
@@ -18,7 +18,6 @@ export default function RegisterPage() {
   const [redirect, setRedirect] = useState(false);
 
   const { userInfo, setUserInfo } = useContext(UserContext) as any;
-  const { toast } = useToast();
 
   async function registerUser(e: FormEvent) {
     e.preventDefault();
@@ -38,11 +37,7 @@ export default function RegisterPage() {
         setRedirect(true);
       }
     } catch (error: any) {
-      toast({
-        variant: 'destructive',
-        title: 'Error creating account',
-        description: error.response.data.error,
-      });
+      toast(error.response.data.error);
     } finally {
       setLoading(false);
     }

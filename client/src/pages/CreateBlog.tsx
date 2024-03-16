@@ -2,7 +2,7 @@ import { useState } from 'react';
 import BlogInput from '../components/blog/BlogInput';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
-import { useToast } from '../components/ui/use-toast';
+import { toast } from 'sonner';
 
 export default function CreateBlog() {
   const [title, setTitle] = useState('');
@@ -11,8 +11,6 @@ export default function CreateBlog() {
   const [cover, setCover] = useState('');
   const [loading, setLoading] = useState(false);
   const [redirect, setRedirect] = useState(false);
-
-  const { toast } = useToast();
 
   async function createBlog(e: SubmitEvent) {
     e.preventDefault();
@@ -33,21 +31,13 @@ export default function CreateBlog() {
       });
 
       if (response.status === 201) {
-        toast({
-          variant: 'default',
-          title: 'Success',
-          description: 'Blog post created',
-        });
+        toast('Blog post created');
         setRedirect(true);
       } else {
         throw new Error();
       }
     } catch (error: any) {
-      toast({
-        variant: 'destructive',
-        title: 'Error',
-        description: error.response.data.error,
-      });
+      toast(error.response.data.error);
     } finally {
       setLoading(false);
     }

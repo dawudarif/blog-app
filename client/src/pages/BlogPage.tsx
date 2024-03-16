@@ -7,7 +7,6 @@ import { useContext, useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import BlogContentLoader from '../components/loaders/BlogContentLoader';
 import RingLoader from '../components/loaders/ring';
-import { useToast } from '../components/ui/use-toast';
 import { UserContext } from '../context/userContext';
 import { ISingleBlogItem } from '../types/types';
 import {
@@ -16,14 +15,13 @@ import {
   PopoverTrigger,
 } from '../components/ui/popover';
 import { Button } from '../components/ui/button';
+import { toast } from 'sonner';
 
 export default function BlogPage() {
   const [redirect, setRedirect] = useState(false);
   const [blog, setBlog] = useState<ISingleBlogItem | null>(null);
   const [loading, setLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
-
-  const { toast } = useToast();
 
   const { userInfo } = useContext(UserContext) as any;
   const { id } = useParams();
@@ -57,11 +55,7 @@ export default function BlogPage() {
         throw new Error();
       }
     } catch (error: any) {
-      toast({
-        variant: 'destructive',
-        title: 'Error',
-        description: error.response.data.error,
-      });
+      toast(error.response.data.error);
     } finally {
       setDeleteLoading(false);
     }

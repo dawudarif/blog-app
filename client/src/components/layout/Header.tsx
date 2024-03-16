@@ -2,13 +2,11 @@ import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { UserContext } from '../../context/userContext';
-import { useToast } from '../ui/use-toast';
+import { toast } from 'sonner';
 
 export default function Header() {
   const { userInfo, setUserInfo } = useContext(UserContext) as any;
   const [redirect, setRedirect] = useState(false);
-
-  const { toast } = useToast();
 
   const hrefStyle =
     'font-semibold text-xl sm:text-lg xs:text-lg cursor-pointer hover:bg-slate-800 transition-all duration-500 p-2 xs:p-1 sm:p-1 rounded-md text-white';
@@ -32,11 +30,7 @@ export default function Header() {
 
     if (response.status === 200) {
       setUserInfo({});
-      toast({
-        variant: 'default',
-        title: 'Success',
-        description: `You've been logged out successfully`,
-      });
+      toast(`You've been logged out successfully`);
     }
   }
 
