@@ -44,29 +44,34 @@ export default function Header() {
   }
 
   return (
-    <div className='flex justify-center items-center h-20 xs:h-15 sm:h-15 gap-4 xs:gap-2 sm:gap-2 bg-slate-950 text-white shadow-sm'>
-      <Link to='/' className={hrefStyle}>
-        Feed
-      </Link>
-
-      <Link to='/search' className={hrefStyle}>
-        Search
-      </Link>
-
-      {userInfo.name ? (
-        <>
+    <div className='flex justify-between sm:justify-center xs:justify-center px-2 items-center h-20 xs:h-15 sm:h-15  bg-slate-950 text-white shadow-sm'>
+      <span>
+        <Link to='/' className={hrefStyle}>
+          Feed
+        </Link>
+        <Link to='/search' className={hrefStyle}>
+          Search
+        </Link>
+        {userInfo.name && (
           <Link to='/blog/create' className={hrefStyle}>
             Create
           </Link>
-          <div className={hrefStyle} onClick={logout}>
-            Logout
-          </div>
-        </>
-      ) : (
-        <Link to='/login' className={hrefStyle}>
-          Login
-        </Link>
-      )}
+        )}
+      </span>
+
+      <span>
+        {userInfo.name ? (
+          <>
+            <div className={hrefStyle} onClick={logout}>
+              Logout
+            </div>
+          </>
+        ) : (
+          <Link to='/login' className={hrefStyle}>
+            Login
+          </Link>
+        )}
+      </span>
     </div>
   );
 }
