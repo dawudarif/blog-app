@@ -1,17 +1,17 @@
-import axios from 'axios';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import BlogSlide from '../components/index/BlogSlide';
-import BlogSlideLoader from '../components/loaders/BlogSlideLoader';
-import { Button } from '../components/ui/button';
+import axios from "axios";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import BlogSlide from "../components/index/BlogSlide";
+import BlogSlideLoader from "../components/loaders/BlogSlideLoader";
+import { Button } from "../components/ui/button";
 import {
   Pagination,
   PaginationContent,
   PaginationEllipsis,
   PaginationItem,
   PaginationLink,
-} from '../components/ui/pagination';
-import { IBlogItem } from '../types/types';
+} from "../components/ui/pagination";
+import { IBlogItem } from "../types/types";
 
 export default function IndexPage() {
   const [pageNo, setPageNo] = useState(1);
@@ -32,7 +32,7 @@ export default function IndexPage() {
           page = pageNo + 1;
         } else if (input === -1) {
           page = pageNo - 1;
-        } else if (input === 'last') {
+        } else if (input === "last") {
           page = totalPages;
         }
       } else {
@@ -47,7 +47,7 @@ export default function IndexPage() {
       });
       setData(response.data.posts);
       setTotalPages(response.data.pages);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (error) {
     } finally {
       setLoading(false);
@@ -60,8 +60,16 @@ export default function IndexPage() {
   }, []);
 
   return (
-    <div className='w-full flex flex-col justify-stretch items-center min-h-[80vh]'>
-      <div className='grid grid-flow-row grid-cols-2 xs:grid-cols-1 justify-center items-center w-[80%] md:w-[90%] sm:w-[90%] xs:w-full xs:p-2 md:p-2 p-4 gap-4'>
+    <div className="max-w-screen-xxl lg:px-10 px-5 mx-auto w-full">
+      <h1 className="text-[4.375rem] sm:text-[6.25rem] md:text-[9.375rem] lg:text-[12.5rem] xl:text-[15.1875rem] uppercase font-bold mt-[1.25rem] text-center border-b-4 border-b-stone-100">
+        Blogger
+      </h1>
+
+      <h4 className="text-2xl font-semibold text-brand-text-black mt-10 w-fit px-5">
+        Recent Blog Posts
+      </h4>
+
+      <div className="grid w-full grid-flow-row sm:grid-cols-2 md:grid-cols-3 grid-cols-1 justify-center items-center pt-4 gap-4">
         {loading ? (
           <>
             {[0, 1, 2, 3, 4, 5, 6, 7].map((i: number) => (
@@ -76,22 +84,22 @@ export default function IndexPage() {
           </>
         )}
       </div>
-      <Pagination className='py-4 flex items-center justify-center'>
+      <Pagination className="py-4 flex items-center justify-center">
         <PaginationContent>
-          <PaginationItem className='cursor-pointer text-lg sm:text-base xs:text-base'>
+          <PaginationItem className="cursor-pointer text-lg sm:text-base xs:text-base">
             <Button disabled={pageNo === 1} onClick={() => getBlogPosts(-1)}>
               <ChevronLeft size={20} />
             </Button>
           </PaginationItem>
-          <PaginationItem className='cursor-pointer'>
-            <PaginationLink className='text-xl sm:text-base xs:text-base underline'>
+          <PaginationItem className="cursor-pointer">
+            <PaginationLink className="text-xl sm:text-base xs:text-base underline">
               {pageNo}
             </PaginationLink>
           </PaginationItem>
-          <PaginationItem onClick={() => getBlogPosts('last')}>
-            <PaginationEllipsis className='cursor-pointer text-xl' />
+          <PaginationItem onClick={() => getBlogPosts("last")}>
+            <PaginationEllipsis className="cursor-pointer text-xl" />
           </PaginationItem>
-          <PaginationItem className='cursor-pointer text-lg sm:text-base xs:text-base'>
+          <PaginationItem className="cursor-pointer text-lg sm:text-base xs:text-base">
             <Button
               disabled={pageNo === totalPages}
               onClick={() => getBlogPosts(1)}
