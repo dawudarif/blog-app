@@ -1,7 +1,9 @@
 export default function Footer() {
   return (
-    <div className='flex justify-center items-center h-16 xs:h-12 sm:h-12 xs:gap-2 sm:gap-2 bg-slate-950 text-white text-lg gap-4 font-mono font-semibold'>
-      <span> Blogger</span> <span>&copy; {new Date().getFullYear()}</span>
+    <div className="bg-stone-100 w-full">
+      <div className="flex justify-start items-center text-brand-text-black py-16 max-w-screen-xl lg:px-14 px-6 mx-auto gap-4 font-bold text-2xl">
+        <span> Blogger</span> <span>&copy; {new Date().getFullYear()}</span>
+      </div>
     </div>
   );
 }

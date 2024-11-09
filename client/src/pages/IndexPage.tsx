@@ -60,7 +60,7 @@ export default function IndexPage() {
   }, []);
 
   return (
-    <div className="max-w-screen-xxl lg:px-10 px-5 mx-auto w-full">
+    <div className="max-w-screen-xl lg:px-10 px-5 mx-auto w-full">
       <h1 className="text-[4.375rem] sm:text-[6.25rem] md:text-[9.375rem] lg:text-[12.5rem] xl:text-[15.1875rem] uppercase font-bold mt-[1.25rem] text-center border-b-4 border-b-stone-100">
         Blogger
       </h1>
@@ -84,28 +84,37 @@ export default function IndexPage() {
           </>
         )}
       </div>
-      <Pagination className="py-4 flex items-center justify-center">
-        <PaginationContent>
-          <PaginationItem className="cursor-pointer text-lg sm:text-base xs:text-base">
-            <Button disabled={pageNo === 1} onClick={() => getBlogPosts(-1)}>
+      <Pagination className="py-4 flex items-center justify-between w-full">
+        <PaginationContent className="flex items-center justify-between w-full">
+          <PaginationItem>
+            <button
+              className="cursor-pointer flex justify-center items-center gap-2 text-lg font-semibold text-stone-700"
+              disabled={pageNo === 1}
+              onClick={() => getBlogPosts(-1)}
+            >
               <ChevronLeft size={20} />
-            </Button>
+              <span>Previous</span>
+            </button>
           </PaginationItem>
-          <PaginationItem className="cursor-pointer">
-            <PaginationLink className="text-xl sm:text-base xs:text-base underline">
-              {pageNo}
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem onClick={() => getBlogPosts("last")}>
-            <PaginationEllipsis className="cursor-pointer text-xl" />
-          </PaginationItem>
-          <PaginationItem className="cursor-pointer text-lg sm:text-base xs:text-base">
-            <Button
+          <div className="flex justify-center items-end text-stone-700">
+            <PaginationItem className="cursor-pointer">
+              <PaginationLink className="text-xl underline">
+                {pageNo}
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem onClick={() => getBlogPosts("last")}>
+              <PaginationEllipsis className="cursor-pointer text-xl" />
+            </PaginationItem>
+          </div>
+          <PaginationItem>
+            <button
+              className="cursor-pointer flex justify-center items-center gap-2 text-lg font-semibold text-stone-700"
               disabled={pageNo === totalPages}
               onClick={() => getBlogPosts(1)}
             >
+              <span>Next</span>
               <ChevronRight size={20} />
-            </Button>
+            </button>
           </PaginationItem>
         </PaginationContent>
       </Pagination>

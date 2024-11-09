@@ -80,9 +80,9 @@ export default function BlogPage() {
   if (loading) return <BlogContentLoader />;
 
   return (
-    <div className="max-w-screen-xl lg:px-10 px-5 mx-auto flex justify-center items-center bg-stone-50 py-6">
+    <div className="max-w-screen-xl w-full lg:px-10 px-5 mx-auto flex justify-center items-center bg-stone-50 py-6">
       {blog && (
-        <div>
+        <div className="w-full">
           <div className="flex items-center gap-4">
             <Link to="/" className="hover:text-slate-900 hover:underline">
               <Home size={22} />
